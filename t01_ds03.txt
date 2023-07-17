@@ -1,0 +1,42 @@
+(venv)  Rvknt@Ghosted   03:52 |  18 Jul, Tue  tutorial   main ≡   ?3  
+ 16ms⠀⠀http http://127.0.0.1:8000/snippets/
+HTTP/1.1 200 OK
+Content-Length: 354
+Content-Type: application/json
+Cross-Origin-Opener-Policy: same-origin
+Date: Mon, 17 Jul 2023 22:22:57 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.10.0
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+[
+    {
+        "code": "foo = \"bar\"\n",
+        "id": 1,
+        "language": "python",
+        "linenos": false,
+        "style": "friendly",
+        "title": ""
+    },
+    {
+        "code": "print(\"hello, world\")\n",
+        "id": 2,
+        "language": "python",
+        "linenos": false,
+        "style": "friendly",
+        "title": ""
+    },
+    {
+        "code": "print(\"hello, world\")",
+        "id": 3,
+        "language": "python",
+        "linenos": false,
+        "style": "friendly",
+        "title": ""
+    }
+]
+
+
+(venv)  Rvknt@Ghosted   03:52 |  18 Jul, Tue  tutorial   main ≡   ?3  
+ 312ms⠀⠀
