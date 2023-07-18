@@ -170,8 +170,9 @@ from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework import mixins
 from rest_framework import generics
-
-
+from snippets.serializers import UserSerializer
+from rest_framework import permissions
+from snippets.permissions import IsOwnerOrReadOnly
 
 
 
@@ -193,6 +194,7 @@ Using the mixin classes we've rewritten the views to use slightly less code than
 class SnippetList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -200,7 +202,8 @@ class SnippetList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 '''Pretty similar. Again we're using the GenericAPIView class to provide the core functionality, and adding in mixins to provide the .retrieve(), .update() and .destroy() actions.'''  
@@ -217,6 +220,7 @@ Using the mixin classes we've rewritten the views to use slightly less code than
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):    
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -226,3 +230,17 @@ class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+
+
+from django.contrib.auth.models import User
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
